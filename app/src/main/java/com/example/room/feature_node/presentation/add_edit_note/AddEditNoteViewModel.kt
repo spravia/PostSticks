@@ -42,6 +42,7 @@ class AddEditNoteViewModel @Inject constructor(
          noteId ->
             if(noteId != -1){
                 viewModelScope.launch {
+                    //Aquì se recupera la Note seleccionada
                     notesUsesCases.getNote(noteId)?.also{
                      note ->
                           currentNoteId = note.id
@@ -93,6 +94,7 @@ class AddEditNoteViewModel @Inject constructor(
                             )
                         )
                         _eventFlow.emit(UiEvent.SaveNote)
+                            //En caso de error se envia un mensaje
                     }catch (e: InvalidNoteException) {
                         _eventFlow.emit(
                             UiEvent.ShowSnackbar(

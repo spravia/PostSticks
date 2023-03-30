@@ -103,8 +103,8 @@ fun AddEditNoteScreen(
                                     .border(
                                         width = 3.dp,
                                         color = if (viewModel.noteColor.value == colorInt) {
-                                            Color.Black
-                                        } else Color.Transparent,
+                                                    Color.Black
+                                                 } else Color.Transparent,
                                         shape = CircleShape
                                     )    //Si le doy clik le doy el color y lo hago animado
                                     .clickable {
@@ -151,7 +151,6 @@ fun AddEditNoteScreen(
                     textStyle = MaterialTheme.typography.body1,
                     modifier = Modifier.fillMaxHeight()
                 )
-
             }
     }
 }
