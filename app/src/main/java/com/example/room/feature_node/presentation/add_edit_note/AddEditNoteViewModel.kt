@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
     private  val notesUsesCases : NoteUseCases,
@@ -23,14 +24,15 @@ class AddEditNoteViewModel @Inject constructor(
 ):ViewModel(){
 
 
-    private val _noteTittle = mutableStateOf(NoteTextFieldState(hint = "Enter title"))
+    private val _noteTittle = mutableStateOf(NoteTextFieldState(hint = "Ingrese titulo"))
     val noteTittle : State<NoteTextFieldState> = _noteTittle
 
-    private val _noteContent = mutableStateOf(NoteTextFieldState(hint = "Enter some content"))
+    private val _noteContent = mutableStateOf(NoteTextFieldState(hint = "Ingrese el contenido"))
     val noteContent : State<NoteTextFieldState> = _noteContent
 
     private var _noteColor = mutableStateOf(Note.noteColors.random().toArgb())
     val noteColor : State<Int> = _noteColor
+
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     var eventFlow = _eventFlow.asSharedFlow()
