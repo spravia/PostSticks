@@ -1,5 +1,6 @@
 package com.example.room.feature_node.presentation.add_edit_note
 
+
 import androidx.lifecycle.ViewModel
 import com.example.room.feature_node.domain.use_case.NoteUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,11 +9,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.room.feature_node.domain.model.InvalidNoteException
 import com.example.room.feature_node.domain.model.Note
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,6 +21,7 @@ class AddEditNoteViewModel @Inject constructor(
     private  val notesUsesCases : NoteUseCases,
     savedStateHandle: SavedStateHandle
 ):ViewModel(){
+
 
     private val _noteTittle = mutableStateOf(NoteTextFieldState(hint = "Enter title"))
     val noteTittle : State<NoteTextFieldState> = _noteTittle
@@ -78,18 +78,18 @@ class AddEditNoteViewModel @Inject constructor(
                 )
             }
             is AddEditNoteEvent.ChageColor -> {
-                // TODO esto es temporal
-                //_noteColor = event.color
-
-                _noteColor = mutableStateOf(Note.noteColors.random().toArgb())
+                      _noteColor.value = event.color
             }
 
             is AddEditNoteEvent.SaveNote -> {
                 viewModelScope.launch {
                     try{
                         notesUsesCases.addNote(
-                            Note(title = noteTittle.value.text, content = noteContent.value.text, timestamp = System.currentTimeMillis(),
-                            color = noteColor.value, id = currentNoteId
+                            Note(title = noteTittle.value.text,
+                                 content = noteContent.value.text,
+                                 timestamp = System.currentTimeMillis(),
+                                 color = noteColor.value,
+                                 id = currentNoteId
                             )
                         )
                         _eventFlow.emit(UiEvent.SaveNote)
