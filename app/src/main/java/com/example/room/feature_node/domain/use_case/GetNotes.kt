@@ -9,8 +9,11 @@ import kotlinx.coroutines.flow.map
 
 class GetNotes(private val repository: NoteRepository) {
 
-    operator fun invoke(
-        noteOrder: NoteOrder = NoteOrder.Date(OrderType.Desending)): Flow<List<Note>>
+
+           //  invoke permite una llamada directa a la clase sin necesidad de llamar a una
+           // funcion dentro de la clase
+    operator fun invoke(noteOrder: NoteOrder = NoteOrder.Date(OrderType.Desending))
+                                                 : Flow<List<Note>>
     {
 
         return repository.getNotes().map { notes ->

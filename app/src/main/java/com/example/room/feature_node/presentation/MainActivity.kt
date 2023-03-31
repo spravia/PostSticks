@@ -33,10 +33,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             RoomTheme (
               //  darkTheme = true
-            ) {
+            )
+             {
+                /*
                 Surface(
                     color = MaterialTheme.colors.surface
-                 ) {
+                 )
+                  {
 
 
                     val navController = rememberNavController()
@@ -83,8 +86,7 @@ class MainActivity : ComponentActivity() {
 
                         }
                     }
-                }
-
+                }    fin surface */
             }
         }
     }

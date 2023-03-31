@@ -27,10 +27,12 @@ class NotesViewModels @Inject constructor(
     private val _state = mutableStateOf(NotesState())
     val state : State<NotesState> = _state
 
-    //una variable que me guarde el notes recientemente eliminado
+    //una variable que me guarde el note recientemente eliminado
     private var recentlyDeletedNotes : Note? = null
 
     private var getNotesJob : Job? = null
+
+    private val contador = mutableStateOf(0)
 
     //en la primera carga se hace ordenado por fecha y descendiente
     init {
@@ -81,12 +83,29 @@ class NotesViewModels @Inject constructor(
                               //finalizado entonces cancel hace eso mismo e inicia un nuevo proceso de
                               //recuperacion de datos
 
+
         getNotesJob = notesUseCases.getNotes(noteOrder).onEach {
+                           // con las notas regresadas se guardan y actualizan
+                          //  en la variabla observables _state y state
                 notes ->
+
+                     contador.value = contador.value + 1
+                           //Actualizamos los valores de la Data Clases
+                           //  NoteState  que tiene: notes, orderType, isOrderSectionVisible
+
+                          //funcion COPY se usa para las Data Classes
                     _state.value = state.value.copy(
                             notes = notes,
                             noteOrder = noteOrder)
+
+                    println("Se imprimio $contador")
+
+
+
         }.launchIn(viewModelScope)
+
+
     }
+
 
 }
