@@ -2,7 +2,6 @@ package com.example.room.feature_node.presentation.notes
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.*
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +18,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.SnackbarResult
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.room.feature_node.presentation.notes.components.NoteItem
@@ -37,9 +38,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun NoteScreen(
     navController: NavController,
-    viewModel: NotesViewModels = hiltViewModel()
+    viewModel: NotesViewModels = hiltViewModel(),
+    //viewModel: NotesViewModels
 ) {
+
     val state: NotesState = viewModel.state.value
+
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
@@ -123,7 +127,7 @@ fun NoteScreen(
                                                actionLabel = "Deshacer"
                                                  )
                                               if (result == SnackbarResult.ActionPerformed) {
-                                                 viewModel.onEvent(NotesEvent.RestoreNote)
+                                                  viewModel.onEvent(NotesEvent.RestoreNote)
                                               }
                                              }
                              }
@@ -141,11 +145,13 @@ fun NoteScreen(
 @Preview
 @Composable
 fun NoteScreenPreview() {
-
-    val hil : NotesViewModels = hiltViewModel()
+ /*
+    val viewModelState = viewModel<NotesViewModels>()
 
     NoteScreen( navController= rememberNavController(),
-                viewModel = hil)
+                viewModel = viewModelState)
+                 */
+
 }
 
 

@@ -13,8 +13,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.TextField
-import androidx.navigation.NavBackStackEntry
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.room.feature_node.presentation.add_edit_note.AddEditNoteScreen
 import com.example.room.feature_node.presentation.notes.NoteScreen
+import com.example.room.feature_node.presentation.notes.NotesViewModels
 import com.example.room.feature_node.presentation.util.Screen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +35,6 @@ class MainActivity : ComponentActivity() {
               //  darkTheme = true
             )
              {
-                /*
                 Surface(
                     color = MaterialTheme.colors.surface
                  )
@@ -44,22 +43,30 @@ class MainActivity : ComponentActivity() {
 
                     val navController = rememberNavController()
 
+
+                    //Instancio la clase viewModel
+                    val viewModelState = viewModel<NotesViewModels>()
+
                     //Sirve para construir un componente que permite la navegación
                     // a treves de elementos componibles de la app
                     // aqui se indica cual sera el elemento componible de inicio
-
-
                     NavHost(navController = navController,
                             startDestination = Screen.NoteScreen.route
                     ){
+
                         //Definimos nuestras pantallas con composable, les damos>
                         // un nombre en route o mediante una sealed class
                         // agregamos parametros si se require
                         // y en en el Content agregamos la función que Componible
                         // que deseamos llamar
+
                         composable(route = Screen.NoteScreen.route)
                         {
-                            NoteScreen(navController = navController)
+
+                            NoteScreen(
+                                navController = navController,
+                                //viewModel = viewModelState
+                            )
                         }
 
                         composable(route = Screen.AddEditNoteScreen.route +
@@ -86,7 +93,7 @@ class MainActivity : ComponentActivity() {
 
                         }
                     }
-                }    fin surface */
+                }     // fin surface
             }
         }
     }

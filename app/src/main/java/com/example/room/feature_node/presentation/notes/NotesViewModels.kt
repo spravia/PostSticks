@@ -98,7 +98,7 @@ class NotesViewModels @Inject constructor(
                             notes = notes,
                             noteOrder = noteOrder)
 
-                    println("Se imprimio $contador")
+                    println("Se imprimio $contador.value")
 
 
 
