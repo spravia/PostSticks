@@ -2,6 +2,7 @@ package com.example.room.feature_node.presentation.notes
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,6 +27,11 @@ class NotesViewModels @Inject constructor(
     //Declaro una variable observable para los estados
     private val _state = mutableStateOf(NotesState())
     val state : State<NotesState> = _state
+
+    /*  this is another way to declare it
+          private var _state by  mutableStateOf(NotesState())
+                private set
+     */
 
     //una variable que me guarde el note recientemente eliminado
     private var recentlyDeletedNotes : Note? = null

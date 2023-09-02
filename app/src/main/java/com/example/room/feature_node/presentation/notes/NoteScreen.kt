@@ -1,7 +1,9 @@
 package com.example.room.feature_node.presentation.notes
 
+
 import android.annotation.SuppressLint
 import androidx.compose.animation.*
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,9 +21,11 @@ import androidx.compose.material.SnackbarResult
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.ui.unit.dp
@@ -32,13 +36,16 @@ import androidx.navigation.compose.rememberNavController
 import com.example.room.feature_node.presentation.notes.components.NoteItem
 import com.example.room.feature_node.presentation.notes.components.OrderSection
 import com.example.room.feature_node.presentation.util.Screen
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+
+@OptIn(ExperimentalAnimationApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun NoteScreen(
     navController: NavController,
-    viewModel: NotesViewModels = hiltViewModel(),
+    viewModel: NotesViewModels = hiltViewModel()
     //viewModel: NotesViewModels
 ) {
 
@@ -68,8 +75,10 @@ fun NoteScreen(
                 .padding(16.dp)
         )
         {
+            val alpha: Float by animateFloatAsState(if (state.isOrderSectionVisible) 1f else 0.5f)
+
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().graphicsLayer(alpha = alpha) ,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -93,7 +102,7 @@ fun NoteScreen(
                 exit = fadeOut() + slideOutVertically()
             )
             {
-                OrderSection(
+                    OrderSection(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
@@ -103,6 +112,13 @@ fun NoteScreen(
                     }
                 )
             }
+
+            /*
+            AnimatedContent(targetState = state.isOrderSectionVisible) {
+                    targetCount ->
+                // Make sure to use `targetCount`, not `count`.
+                Text(text = "Count:")
+            }*/
 
             Spacer(modifier = Modifier.height(8.dp))
 
